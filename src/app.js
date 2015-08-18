@@ -40,7 +40,7 @@ App.initDayWindow = function() {
   });
 
   App.dayWindow.dateText = new UI.Text({
-    position: new Vector2(0, 28),
+    position: new Vector2(0, 20),
     size: new Vector2(windowSize.x, 20),
     font: 'gothic-18-bold',
     color: 'black',
@@ -48,11 +48,18 @@ App.initDayWindow = function() {
   });
 
   App.dayWindow.temperatureText = new UI.Text({
-    position: new Vector2(0, 50),
+    position: new Vector2(0, 40),
     size: new Vector2(windowSize.x, 30),
     font: 'leco-26-bold-numbers-am-pm',
     color: 'black',
     textAlign: 'center',
+  });
+
+  App.dayWindow.weatherIcon = new UI.Image({
+    position: new Vector2((windowSize.x - 25) / 2, 90),
+    size: new Vector2(25, 25),
+    image: 'images/partly-cloudy-50.png',
+    compositing: 'set',
   });
 
   App.dayWindow.cityText = new UI.Text({
@@ -65,6 +72,7 @@ App.initDayWindow = function() {
   wind.add(App.dayWindow.statusText);
   wind.add(App.dayWindow.dateText);
   wind.add(App.dayWindow.temperatureText);
+  wind.add(App.dayWindow.weatherIcon);
   wind.add(App.dayWindow.cityText);
 };
 
