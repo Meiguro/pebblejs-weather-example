@@ -3,17 +3,21 @@ var UI = require('ui');
 var App = {};
 
 App.init = function() {
-  var homeMenu = new UI.Menu({ fullscreen: true });
+  App.homeMenu = new UI.Menu({ fullscreen: true });
 
+  App.showHomeLoading();
+
+  App.homeMenu.show();
+};
+
+App.showHomeLoading = function() {
   var sectionId = 0;
-  homeMenu.section(sectionId, {
+  App.homeMenu.section(sectionId, {
     title: 'Weather',
     items: [{
       title: 'Loading...'
     }],
   });
-
-  homeMenu.show();
 };
 
 App.init();
