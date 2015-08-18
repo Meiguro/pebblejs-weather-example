@@ -23,7 +23,22 @@ App.showDailyForecast = function() {
   App.showHomeLoading();
 
   Weather.dailyForecast(function(data) {
-    console.log(data);
+    var items = [];
+
+    data.list.forEach(function(day, i) {
+      var min = Math.round(day.temp.min);
+      var max = Math.round(day.temp.max);
+      var title = day.weather[0].main;
+      var description = day.weather[0].description;
+
+      items.push({
+        title: max + '°/' + min + '° ' + title,
+        subtitle: description,
+      });
+    });
+
+    var sectionId = 0;
+    App.homeMenu.items(sectionId, items);
   });
 
   App.homeMenu.show();
