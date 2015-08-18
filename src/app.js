@@ -9,6 +9,27 @@ var capitalize = function(str) {
 
 var App = {};
 
+App.iconMap = {
+  '01d': 'images/sun-50.png',
+  '01n': 'images/sun-50.png',
+  '02d': 'images/partly-cloudy-50.png',
+  '02n': 'images/partly-cloudy-50.png',
+  '03d': 'images/cloudy-day-50.png',
+  '03n': 'images/cloudy-day-50.png',
+  '04d': 'images/cloudy-day-50.png',
+  '04n': 'images/cloudy-day-50.png',
+  '09d': 'images/light-rain-50.png',
+  '09n': 'images/light-rain-50.png',
+  '10d': 'images/heavy-rain-50.png',
+  '10n': 'images/heavy-rain-50.png',
+  '11d': 'images/heavy-rain-50.png',
+  '11n': 'images/heavy-rain-50.png',
+  '13d': 'images/heavy-snow-50.png',
+  '13n': 'images/heavy-snow-50.png',
+  '50d': 'images/cloudy-day-50.png',
+  '50n': 'images/cloudy-day-50.png',
+};
+
 App.init = function() {
   App.homeMenu = new UI.Menu({
     fullscreen: true,
@@ -92,6 +113,7 @@ App.makeDayModel = function(data, forecast) {
   var dayDate = moment.unix(data.dt).format('ddd D');
   var title = data.weather[0].main;
   var subtitle = data.weather[0].description;
+  var icon = App.iconMap[data.weather[0].icon];
 
   return {
     data: data,
@@ -103,6 +125,7 @@ App.makeDayModel = function(data, forecast) {
       date: dayDate,
       temperature: max + '°/' + min + '°',
       city: forecast.city.name,
+      icon: icon,
     },
   };
 };
@@ -134,6 +157,7 @@ App.showDailyForecast = function() {
 App.showDayCard = function(model) {
   App.dayWindow.dateText.text(model.dayWindow.date);
   App.dayWindow.temperatureText.text(model.dayWindow.temperature);
+  App.dayWindow.weatherIcon.image(model.dayWindow.icon);
   App.dayWindow.cityText.text(model.dayWindow.city);
 
   App.dayWindow.window.show();
