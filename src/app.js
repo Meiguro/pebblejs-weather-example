@@ -5,7 +5,10 @@ var moment = require('moment');
 var App = {};
 
 App.init = function() {
-  App.homeMenu = new UI.Menu({ fullscreen: true });
+  App.homeMenu = new UI.Menu({
+    fullscreen: true,
+    highlightBackgroundColor: 'cobaltBlue',
+  });
 
   App.showDailyForecast();
 };
