@@ -1,4 +1,5 @@
 var UI = require('ui');
+var Vector2 = require('vector2');
 var Weather = require('weather');
 var moment = require('moment');
 
@@ -14,11 +15,57 @@ App.init = function() {
     highlightBackgroundColor: 'cobaltBlue',
   });
 
-  App.dayCard = new UI.Card({
-    scrollable: true,
-  });
+  App.initDayWindow();
 
   App.showDailyForecast();
+};
+
+App.initDayWindow = function() {
+  var windowSize = new Vector2(144, 168);
+
+  App.dayWindow = {};
+
+  var wind = App.dayWindow.window = new UI.Window({
+    fullscreen: true,
+    backgroundColor: 'lightGray',
+  });
+
+  App.dayWindow.statusText = new UI.TimeText({
+    position: new Vector2(0, 0),
+    size: new Vector2(windowSize.x, 16),
+    font: 'gothic-14',
+    color: 'black',
+    text: '%I:%M %p',
+    textAlign: 'center',
+  });
+
+  App.dayWindow.dateText = new UI.Text({
+    position: new Vector2(0, 28),
+    size: new Vector2(windowSize.x, 20),
+    font: 'gothic-18-bold',
+    color: 'black',
+    textAlign: 'center',
+  });
+
+  App.dayWindow.temperatureText = new UI.Text({
+    position: new Vector2(0, 50),
+    size: new Vector2(windowSize.x, 30),
+    font: 'leco-26-bold-numbers-am-pm',
+    color: 'black',
+    textAlign: 'center',
+  });
+
+  App.dayWindow.cityText = new UI.Text({
+    position: new Vector2(0, 134),
+    size: new Vector2(windowSize.x, 20),
+    font: 'gothic-18-bold',
+    color: 'black',
+  });
+
+  wind.add(App.dayWindow.statusText);
+  wind.add(App.dayWindow.dateText);
+  wind.add(App.dayWindow.temperatureText);
+  wind.add(App.dayWindow.cityText);
 };
 
 App.showHomeLoading = function() {
@@ -34,8 +81,6 @@ App.showHomeLoading = function() {
 App.makeDayModel = function(data, forecast) {
   var min = data.temp.min.toFixed();
   var max = data.temp.max.toFixed();
-  var cardMin = data.temp.min.toFixed(1);
-  var cardMax = data.temp.max.toFixed(1);
   var dayDate = moment.unix(data.dt).format('ddd D');
   var title = data.weather[0].main;
   var subtitle = data.weather[0].description;
@@ -46,16 +91,10 @@ App.makeDayModel = function(data, forecast) {
       title: max + '°/' + min + '° ' + title,
       subtitle: dayDate + ' ' + subtitle,
     },
-    dayCard: {
-      title: cardMax + '°/' + cardMin + '°',
-      subtitle: dayDate,
-      body: [
-        forecast.city.name,
-        capitalize(subtitle) + '.',
-        'Humidity', data.humidity + '%',
-        'Pressure', data.pressure + 'hPa',
-        'Wind Speed', data.speed + 'm/s',
-      ].join('\n'),
+    dayWindow: {
+      date: dayDate,
+      temperature: max + '°/' + min + '°',
+      city: forecast.city.name,
     },
   };
 };
@@ -85,9 +124,11 @@ App.showDailyForecast = function() {
 };
 
 App.showDayCard = function(model) {
-  App.dayCard.prop(model.dayCard);
+  App.dayWindow.dateText.text(model.dayWindow.date);
+  App.dayWindow.temperatureText.text(model.dayWindow.temperature);
+  App.dayWindow.cityText.text(model.dayWindow.city);
 
-  App.dayCard.show();
+  App.dayWindow.window.show();
 };
 
 App.init();
