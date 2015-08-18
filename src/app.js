@@ -1,5 +1,6 @@
 var UI = require('ui');
 var Weather = require('weather');
+var moment = require('moment');
 
 var App = {};
 
@@ -28,12 +29,13 @@ App.showDailyForecast = function() {
     data.list.forEach(function(day, i) {
       var min = Math.round(day.temp.min);
       var max = Math.round(day.temp.max);
+      var dayDate = moment.unix(day.dt).format('ddd D');
       var title = day.weather[0].main;
       var description = day.weather[0].description;
 
       items.push({
         title: max + '°/' + min + '° ' + title,
-        subtitle: description,
+        subtitle: dayDate + ' ' + description,
       });
     });
 
