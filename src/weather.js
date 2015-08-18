@@ -16,4 +16,9 @@ Weather.dailyForecastUrl = function() {
 };
 
 Weather.dailyForecast = function(callback) {
+  var url = Weather.dailyForecastUrl();
+  ajax(
+    { url: url, type: 'json' },
+    callback
+  );
 };

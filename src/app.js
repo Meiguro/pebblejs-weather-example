@@ -22,7 +22,8 @@ App.showHomeLoading = function() {
 App.showDailyForecast = function() {
   App.showHomeLoading();
 
-  Weather.dailyForecast(function() {
+  Weather.dailyForecast(function(data) {
+    console.log(data);
   });
 
   App.homeMenu.show();
