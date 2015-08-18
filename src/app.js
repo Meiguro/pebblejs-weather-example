@@ -1,13 +1,12 @@
 var UI = require('ui');
+var Weather = require('weather');
 
 var App = {};
 
 App.init = function() {
   App.homeMenu = new UI.Menu({ fullscreen: true });
 
-  App.showHomeLoading();
-
-  App.homeMenu.show();
+  App.showDailyForecast();
 };
 
 App.showHomeLoading = function() {
@@ -18,6 +17,15 @@ App.showHomeLoading = function() {
       title: 'Loading...'
     }],
   });
+};
+
+App.showDailyForecast = function() {
+  App.showHomeLoading();
+
+  Weather.dailyForecast(function() {
+  });
+
+  App.homeMenu.show();
 };
 
 App.init();
