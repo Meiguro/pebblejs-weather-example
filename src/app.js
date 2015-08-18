@@ -10,6 +10,10 @@ App.init = function() {
     highlightBackgroundColor: 'cobaltBlue',
   });
 
+  App.dayCard = new UI.Card({
+    scrollable: true,
+  });
+
   App.showDailyForecast();
 };
 
@@ -48,6 +52,9 @@ App.showDailyForecast = function() {
       items.push({
         title: model.title,
         subtitle: model.subtitle,
+        select: function() {
+          App.showDayCard(model);
+        },
       });
     });
 
@@ -56,6 +63,23 @@ App.showDailyForecast = function() {
   });
 
   App.homeMenu.show();
+};
+
+App.showDayCard = function(model) {
+  var data = model.data;
+
+  App.dayCard.prop({
+    title: model.title,
+    subtitle: model.subtitle,
+    body: [
+      'Temperature: ' + data.temp.max + '°/' + data.temp.min + '°',
+      'Humidity: ' + data.humidity + '%',
+      'Pressure: ' + data.pressure + 'hPa',
+      'Wind Speed: ' + data.speed + 'm/s',
+    ].join('\n')
+  });
+
+  App.dayCard.show();
 };
 
 App.init();
