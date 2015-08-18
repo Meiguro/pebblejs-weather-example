@@ -23,22 +23,31 @@ App.showHomeLoading = function() {
   });
 };
 
+App.makeDayModel = function(data) {
+  var min = Math.round(data.temp.min);
+  var max = Math.round(data.temp.max);
+  var dayDate = moment.unix(data.dt).format('ddd D');
+  var title = data.weather[0].main;
+  var subtitle = data.weather[0].description;
+
+  return {
+    data: data,
+    title: max + '°/' + min + '° ' + title,
+    subtitle: dayDate + ' ' + subtitle,
+  };
+};
+
 App.showDailyForecast = function() {
   App.showHomeLoading();
 
-  Weather.dailyForecast(function(data) {
+  Weather.dailyForecast(function(forecast) {
     var items = [];
 
-    data.list.forEach(function(day, i) {
-      var min = Math.round(day.temp.min);
-      var max = Math.round(day.temp.max);
-      var dayDate = moment.unix(day.dt).format('ddd D');
-      var title = day.weather[0].main;
-      var description = day.weather[0].description;
-
+    forecast.list.forEach(function(data, i) {
+      var model = App.makeDayModel(data);
       items.push({
-        title: max + '°/' + min + '° ' + title,
-        subtitle: dayDate + ' ' + description,
+        title: model.title,
+        subtitle: model.subtitle,
       });
     });
 
