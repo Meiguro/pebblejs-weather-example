@@ -2,6 +2,10 @@ var UI = require('ui');
 var Weather = require('weather');
 var moment = require('moment');
 
+var capitalize = function(str) {
+  return str.charAt(0).toUpperCase() + str.substr(1);
+};
+
 var App = {};
 
 App.init = function() {
@@ -27,17 +31,32 @@ App.showHomeLoading = function() {
   });
 };
 
-App.makeDayModel = function(data) {
-  var min = Math.round(data.temp.min);
-  var max = Math.round(data.temp.max);
+App.makeDayModel = function(data, forecast) {
+  var min = data.temp.min.toFixed();
+  var max = data.temp.max.toFixed();
+  var cardMin = data.temp.min.toFixed(1);
+  var cardMax = data.temp.max.toFixed(1);
   var dayDate = moment.unix(data.dt).format('ddd D');
   var title = data.weather[0].main;
   var subtitle = data.weather[0].description;
 
   return {
     data: data,
-    title: max + '°/' + min + '° ' + title,
-    subtitle: dayDate + ' ' + subtitle,
+    menuItem: {
+      title: max + '°/' + min + '° ' + title,
+      subtitle: dayDate + ' ' + subtitle,
+    },
+    dayCard: {
+      title: cardMax + '°/' + cardMin + '°',
+      subtitle: dayDate,
+      body: [
+        forecast.city.name,
+        capitalize(subtitle) + '.',
+        'Humidity', data.humidity + '%',
+        'Pressure', data.pressure + 'hPa',
+        'Wind Speed', data.speed + 'm/s',
+      ].join('\n'),
+    },
   };
 };
 
@@ -48,10 +67,10 @@ App.showDailyForecast = function() {
     var items = [];
 
     forecast.list.forEach(function(data, i) {
-      var model = App.makeDayModel(data);
+      var model = App.makeDayModel(data, forecast);
       items.push({
-        title: model.title,
-        subtitle: model.subtitle,
+        title: model.menuItem.title,
+        subtitle: model.menuItem.subtitle,
         select: function() {
           App.showDayCard(model);
         },
@@ -66,18 +85,7 @@ App.showDailyForecast = function() {
 };
 
 App.showDayCard = function(model) {
-  var data = model.data;
-
-  App.dayCard.prop({
-    title: model.title,
-    subtitle: model.subtitle,
-    body: [
-      'Temperature: ' + data.temp.max + '°/' + data.temp.min + '°',
-      'Humidity: ' + data.humidity + '%',
-      'Pressure: ' + data.pressure + 'hPa',
-      'Wind Speed: ' + data.speed + 'm/s',
-    ].join('\n')
-  });
+  App.dayCard.prop(model.dayCard);
 
   App.dayCard.show();
 };
