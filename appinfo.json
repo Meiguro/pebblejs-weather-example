@@ -38,8 +38,38 @@
       },
       {
         "type": "png",
-        "name": "IMAGE_PARTY_CLOUDY_50",
+        "name": "IMAGE_CLOUDY_DAY_50",
+        "file": "images/cloudy-day-50.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_HEAVY_RAIN_50",
+        "file": "images/heavy-rain-50.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_HEAVY_SNOW_50",
+        "file": "images/heavy-snow-50.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_LIGHT_RAIN_50",
+        "file": "images/light-rain-50.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_LIGHT_SNOW_50",
+        "file": "images/light-snow-50.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_PARTLY_CLOUDY_50",
         "file": "images/partly-cloudy-50.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_SUN_50",
+        "file": "images/sun-50.png"
       }
     ]
   }
