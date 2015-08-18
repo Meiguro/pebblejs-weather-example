@@ -35,6 +35,11 @@
         "type": "font",
         "name": "MONO_FONT_14",
         "file": "fonts/UbuntuMono-Regular.ttf"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_PARTY_CLOUDY_50",
+        "file": "images/partly-cloudy-50.png"
       }
     ]
   }
