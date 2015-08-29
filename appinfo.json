@@ -2,6 +2,7 @@
   "uuid": "51cc422e-9066-4944-a6ba-74a55e4cc798",
   "shortName": "Weather.js",
   "longName": "Weather.js",
+  "projectType": "pebblejs",
   "companyName": "Meiguro",
   "versionLabel": "0.1",
   "sdkVersion": "3",
