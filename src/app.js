@@ -1,7 +1,7 @@
 var UI = require('ui');
 var Vector2 = require('vector2');
 var Weather = require('weather');
-var moment = require('moment');
+var moment = (window.moment || require('moment'));
 
 var capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
